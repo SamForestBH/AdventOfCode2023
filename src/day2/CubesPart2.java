@@ -3,7 +3,7 @@ package day2;
 import java.io.*;
 import java.math.*;
 
-public class CubesPart1 {
+public class CubesPart2 {
 	
 	//Max counts
 	static int maxRed = 12; 
@@ -85,6 +85,21 @@ public class CubesPart1 {
 			blue = b;
 		}
 		
+		public int getRed()
+		{
+			return red;
+		}
+		
+		public int getGreen()
+		{
+			return green;
+		}
+		
+		public int getBlue()
+		{
+			return blue;
+		}
+		
 		//Add with a string. 
 		public boolean add(String color, int k)
 		{
@@ -127,11 +142,15 @@ public class CubesPart1 {
 		BufferedReader br = new BufferedReader(new FileReader(input));
 		String line;
 		//Increment legal games and game count. 
-		int legalCount = 0;
+		int powerCount = 0;
 		int gamenum = 1;
 		while((line = br.readLine())!= null)
 		{
 			line = line + ".";
+			//Minimum count
+			int minRed = 0;
+			int minGreen = 0;
+			int minBlue = 0;
 			//Skip past game X
 			int i = (int) (8 + Math.floor(Math.log10(gamenum)));
 			while(i < line.length())
@@ -160,24 +179,21 @@ public class CubesPart1 {
 					if (line.charAt(i - 2) != ',' )
 						break;
 				}
-				//If illegal, throw out. 
-				if (!pull.isLegal())
-				{
-					System.out.println("Illegal Game removed: " + gamenum);
-					break;
-				}
-				//If done, add to count. 
-				System.out.println("Pull legal, resetting");
+				//Update minimum values
+				minRed = Math.max(minRed, pull.getRed());
+				minGreen = Math.max(minGreen, pull.getGreen());
+				minBlue = Math.max(minBlue, pull.getBlue());
 				if (line.charAt(i - 2) == '.')
 				{
-					legalCount += gamenum;
-					System.out.println("Legal Game Added: " + gamenum);
+					break;
 				}
 			}
-			
+			int power = minRed * minBlue * minGreen;
+			System.out.println("Power number of game " + gamenum + " is " + power);
+			powerCount += power;
 			gamenum++;
 		}
-		System.out.println("Sum of legal games: " + legalCount);
+		System.out.println("Sum of power counts: " + powerCount);
 		br.close();
 	}
 }

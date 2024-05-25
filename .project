@@ -20,5 +20,10 @@
 			<type>1</type>
 			<location>C:/Users/smur1/eclipse-workspace/AdventOfCode2023/src/day1/input.txt</location>
 		</link>
+		<link>
+			<name>src/day2/testFileA.txt</name>
+			<type>1</type>
+			<location>C:/Users/smur1/AdventOfCode2023/src/day2/testFileA.txt</location>
+		</link>
 	</linkedResources>
 </projectDescription>
