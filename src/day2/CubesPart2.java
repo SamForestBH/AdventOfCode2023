@@ -138,7 +138,7 @@ public class CubesPart2 {
 	
 	public static void main(String[] args) throws IOException {
 		//Reads line from input file
-		File input = new File("src\\day2\\input.txt");
+		File input = new File("day2\\input.txt");
 		BufferedReader br = new BufferedReader(new FileReader(input));
 		String line;
 		//Increment legal games and game count. 

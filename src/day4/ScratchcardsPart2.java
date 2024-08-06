@@ -93,7 +93,7 @@ public class ScratchcardsPart2 {
 
 	public static void main(String[] args) throws IOException {
 		//Reads line from input file
-		File input = new File("src\\day4\\input.txt");
+		File input = new File("day4\\input.txt");
 		BufferedReader br1 = new BufferedReader(new FileReader(input));
 		String line;
 		int numLines = 0;
