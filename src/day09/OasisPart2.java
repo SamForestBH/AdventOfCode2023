@@ -1,4 +1,4 @@
-package day9;
+package day09;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -32,7 +32,7 @@ public class OasisPart2 {
 			while (!zeros)
 			{
 				zeros = true;
-				newStuff += (vals[0] * Math.pow(-1, newRows));
+				newStuff += (vals[0] * Math.pow(-1, newRows)); //Solution is alternating sum of lefthand column
 				System.out.println("Newly added number is " + vals[0] * Math.pow(-1, newRows));
 				System.out.println("NewStuff is now " + newStuff);
 				long[] newVals = new long[vals.length - 1];

@@ -1,4 +1,4 @@
-package day2;
+package day02;
 
 import java.io.*;
 import java.math.*;
@@ -123,7 +123,7 @@ public class CubesPart1 {
 	
 	public static void main(String[] args) throws IOException {
 		//Reads line from input file
-		File input = new File("day2\\input.txt");
+		File input = new File("day02\\input.txt");
 		BufferedReader br = new BufferedReader(new FileReader(input));
 		String line;
 		//Increment legal games and game count. 

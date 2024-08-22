@@ -1,4 +1,4 @@
-package day1;
+package day01;
 
 import java.io.*;
 
@@ -6,7 +6,7 @@ public class TrebuchetPart2 {
 
 	public static void main(String[] args) throws IOException {
 		//Reads line from input file
-		File input = new File("day1\\input.txt");
+		File input = new File("day01\\input.txt");
 		BufferedReader br = new BufferedReader(new FileReader(input));
 		String line;
 		int count = 0;

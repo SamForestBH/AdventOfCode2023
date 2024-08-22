@@ -1,4 +1,4 @@
-package day7;
+package day07;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -8,9 +8,9 @@ import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class CardsPart1 {
+public class CardsPart2 {
 	
-	public static String[] rankOrder = {"2","3","4","5","6","7","8","9","T","J","Q","K","A"};
+	public static String[] rankOrder = {"J","2","3","4","5","6","7","8","9","T","Q","K","A"};
 	
 	//Stores a single String representing the rank; implements comparable to sort by the above rank order. 
 	public static class Card implements Comparable<Card> {
@@ -25,6 +25,15 @@ public class CardsPart1 {
 		public Card(String r)
 		{
 			rank = r;
+		}
+		
+		public boolean isJoker()
+		{
+			if (rank.equals("J"))
+			{
+				return true;
+			}
+			return false;
 		}
 		
 		@Override
@@ -87,27 +96,47 @@ public class CardsPart1 {
 			//Lists the counts for each unique card in this hand
 			List<Card> thisHandUniques = new ArrayList<Card>();
 			int[] thisCount = {0,0,0,0,0};
+			int thisJokerCount = 0;
 			for (Card c : this.getCards())
 			{
-				if (! thisHandUniques.contains(c))
+				//Jokers are added separately
+				if (c.isJoker())
 				{
-					thisHandUniques.add(c);
+					thisJokerCount ++;
 				}
-				thisCount[thisHandUniques.indexOf(c)] ++;				
+				//Otherwise, increase the card count. 
+				else 
+				{
+				if (! thisHandUniques.contains(c))
+					{
+						thisHandUniques.add(c);
+					}
+					thisCount[thisHandUniques.indexOf(c)] ++;
+				}
 			}
 			Arrays.sort(thisCount);
+			thisCount[4] += thisJokerCount; //Jokers always count towards the largest category
 			//Lists the counts for each unique card in that hand
 			List<Card> thatHandUniques = new ArrayList<Card>();
 			int[] thatCount = {0,0,0,0,0};
+			int thatJokerCount = 0;
 			for (Card c : that.getCards())
 			{
-				if (! thatHandUniques.contains(c))
+				if (c.isJoker())
 				{
-					thatHandUniques.add(c);
+					thatJokerCount ++;
 				}
-				thatCount[thatHandUniques.indexOf(c)] ++;				
+				else 
+				{
+					if (! thatHandUniques.contains(c))
+					{
+						thatHandUniques.add(c);
+					}
+					thatCount[thatHandUniques.indexOf(c)] ++;
+				}
 			}
 			Arrays.sort(thatCount);
+			thatCount[4] += thatJokerCount;
 			for (int i = 4; i >=0; i--)
 			{
 				System.out.println(thisCount[i] + ", " + thatCount[i]);
@@ -141,7 +170,7 @@ public class CardsPart1 {
 	
 	public static void main(String[] args) throws IOException {
 		//Reads line from input file
-		File input = new File("day7\\input.txt");
+		File input = new File("day07\\input.txt");
 		BufferedReader br = new BufferedReader(new FileReader(input));
 		String line;
 		List<Hand> hands = new ArrayList<Hand>();
@@ -150,9 +179,11 @@ public class CardsPart1 {
 		{
 			hands.add(new Hand(line));
 		}
+		//Puts hands in order
 		Collections.sort(hands);
 		long sum = 0;
 		int i = 1;
+		//Multiplies each hand's ranking by its bet. 
 		for(Hand h : hands)
 		{
 			System.out.println("Hand: " + h + ", Bet: " + h.getBet());

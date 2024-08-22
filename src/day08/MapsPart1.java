@@ -1,4 +1,4 @@
-package day8;
+package day08;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -53,7 +53,7 @@ public class MapsPart1 {
 	
 	public static void main(String[] args) throws IOException {
 		//Reads line from input file
-		File input = new File("day8\\input.txt");
+		File input = new File("day08\\input.txt");
 		BufferedReader br = new BufferedReader(new FileReader(input));
 		String line;
 		String instructions = br.readLine();

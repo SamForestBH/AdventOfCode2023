@@ -1,4 +1,4 @@
-package day9;
+package day09;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -19,6 +19,7 @@ public class OasisPart1 {
 		long count = 0;
 		while((line = br.readLine()) != null)
 		{
+			//Fill vals with numbers
 			String[] tempa = line.split("\\s+");
 			long[] vals = new long[tempa.length];
 			for(int i = 0; i < tempa.length; i++)
@@ -26,10 +27,11 @@ public class OasisPart1 {
 				vals[i] = Long.parseLong(tempa[i]);
 			}
 			boolean zeros = false;
+			//until the row is numbers
 			while (!zeros)
 			{
 				zeros = true;
-				count += vals[vals.length - 1];
+				count += vals[vals.length - 1]; //solution is simply sum of lefthand column
 				long[] newVals = new long[vals.length - 1];
 				for (int i = 0; i < newVals.length; i++)
 				{

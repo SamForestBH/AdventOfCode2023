@@ -1,4 +1,4 @@
-package day4;
+package day04;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -10,7 +10,7 @@ import java.util.regex.Pattern;
 
 
 
-public class ScratchcardsPart2 {
+public class ScratchcardsPart1 {
 	
 	public static class Scratchcard
 	{
@@ -42,6 +42,7 @@ public class ScratchcardsPart2 {
 			numbers = new ArrayList<Integer>();
 			for (String s : winSplit)
 			{
+				System.out.println("Adding: " + s);
 				if (!(s.isEmpty()))
 					winners.add(Integer.parseInt(s));
 			}
@@ -93,29 +94,14 @@ public class ScratchcardsPart2 {
 
 	public static void main(String[] args) throws IOException {
 		//Reads line from input file
-		File input = new File("day4\\input.txt");
-		BufferedReader br1 = new BufferedReader(new FileReader(input));
-		String line;
-		int numLines = 0;
-		while((line = br1.readLine()) != null)
-		{
-			numLines ++;
-		}
-		int count = 0;
-		int[] copies = new int[numLines + 1];
-		Arrays.fill(copies, 1);
+		File input = new File("day04\\input.txt");
 		BufferedReader br = new BufferedReader(new FileReader(input));
+		String line;
+		int count = 0;
 		while((line = br.readLine()) != null)
 		{
 			Scratchcard sc = new Scratchcard(line);
-			int cardNum = sc.getCardNum();
-			count += copies[cardNum];
-			System.out.println("Card " + cardNum + " has " + copies[cardNum] + " copies and the count is " + count + ". ");
-			int newCards = sc.countWinners();
-			for (int i = cardNum + 1; i <= cardNum + newCards; i++)
-			{
-				copies[i] += copies[cardNum];
-			}
+			count += sc.getScore();
 		}
 		System.out.println(count);
 	}

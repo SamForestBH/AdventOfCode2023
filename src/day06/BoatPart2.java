@@ -1,4 +1,4 @@
-package day6;
+package day06;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -14,7 +14,7 @@ public class BoatPart2 {
 
 	public static void main(String[] args) throws IOException {
 		//Reads line from input file
-		File input = new File("day6\\input.txt");
+		File input = new File("day06\\input.txt");
 		BufferedReader br = new BufferedReader(new FileReader(input));
 		String line;
 		int count = 0;

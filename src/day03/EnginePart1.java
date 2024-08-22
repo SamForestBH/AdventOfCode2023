@@ -1,4 +1,4 @@
-package day3;
+package day03;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -31,7 +31,7 @@ public class EnginePart1 {
 
 	public static void main(String[] args) throws IOException {
 		//Reads line from input file
-		File input = new File("day3\\input.txt");
+		File input = new File("day03\\input.txt");
 		BufferedReader br = new BufferedReader(new FileReader(input));
 		String line;
 		int i = 0;
