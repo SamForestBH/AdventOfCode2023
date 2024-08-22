@@ -10,6 +10,40 @@ import java.util.regex.Pattern;
 
 public class PipesPart2 {
 	
+	public static class Droplet
+	{
+		private int row;
+		private int col;
+		private String fill;
+		
+		public int getRow()
+		{
+			return row;
+		}
+		
+		public int getCol()
+		{
+			return col;
+		}
+		
+		public String getFill()
+		{
+			return fill;
+		}
+		
+		public String getCapitalFill()
+		{
+			return Character.toString((char)((int)fill.charAt(0) - 32));
+		}
+		
+		public Droplet(String f, int r, int c)
+		{
+			row = r;
+			col = c;
+			fill = f;
+		}
+	}
+	
 	public static class Maze
 	{
 		private List<String> pipes;
@@ -175,25 +209,25 @@ public class PipesPart2 {
 			numPainted = fillWithPaint("a", curPos[0] - 1, curPos[1] - 1);
 			if (numPainted >= 0)
 			{
-				System.out.println(numPainted);
+				//System.out.println(numPainted);
 				toReturn = numPainted;
 			}
 			numPainted = fillWithPaint("b", curPos[0] - 1, curPos[1] + 1);
 			if (numPainted >= 0)
 			{
-				System.out.println(numPainted);
+				//System.out.println(numPainted);
 				toReturn = numPainted;
 			}
 			numPainted = fillWithPaint("c", curPos[0]+ 1, curPos[1] - 1);
 			if (numPainted >= 0)
 			{
-				System.out.println(numPainted);
+				//System.out.println(numPainted);
 				toReturn = numPainted;
 			}
 			numPainted = fillWithPaint("d", curPos[0] + 1, curPos[1] + 1);
 			if (numPainted >= 0)
 			{
-				System.out.println(numPainted);
+				//System.out.println(numPainted);
 				toReturn = numPainted;
 			}
 			return toReturn;
@@ -203,49 +237,47 @@ public class PipesPart2 {
 		public long fillWithPaint(String fill, int row, int col)
 		{
 			long painted = 0;
-			//Return -1 if outside of map
-			if ((row < 0) || (col < 0) || (row >= fullMap.length) || (col >= fullMap[0].length))
+			String capFill;
+			List<Droplet> drops = new ArrayList<Droplet>();
+			drops.add(new Droplet(fill, row, col));
+			while (! drops.isEmpty())
 			{
-				return -1;
+				Droplet d = drops.getFirst();
+				drops.remove(0);
+				row = d.getRow();
+				col = d.getCol();
+				fill = d.getFill();
+				capFill = d.getCapitalFill();
+				if ((row < 0) || (col < 0) || (row >= fullMap.length) || (col >= fullMap[0].length))
+				{
+					System.out.println(fill + row + col);
+					return -1;
+				}
+				//Return -2 if region is filled with a different color of paint
+				if ( (! fullMap[row][col].equals(fill)) && (! fullMap[row][col].equals(Character.toString((char)((int)fill.charAt(0) - 32)))) &&
+						(!fullMap[row][col].equals(".")) && (!fullMap[row][col].equals("P")))
+				{
+					return -2;
+				}
+				//Return 0 if otherwise full (with paint or pipe)
+				if (fullMap[row][col].equals("."))
+				{
+					if ((row % 2 == 0) && (col % 2 == 0))
+					{
+						fullMap[row][col] = capFill;
+						painted ++;
+					}
+					else
+					{
+						fullMap[row][col] = fill;
+					}
+					drops.add(new Droplet(fill, row-1, col));
+					drops.add(new Droplet(fill, row+1, col));
+					drops.add(new Droplet(fill, row, col-1));
+					drops.add(new Droplet(fill, row, col+1));
+				}
 			}
-			//Return -2 if region is filled with a different color of paint
-			if ( (! fullMap[row][col].equals(fill)) && (! fullMap[row][col].equals(Character.toString((char)((int)fill.charAt(0) - 32)))) &&
-					(!fullMap[row][col].equals(".")) && (!fullMap[row][col].equals("P")))
-			{
-				System.out.println("shared area");
-				return -2;
-			}
-			//Return 0 if otherwise full (with paint or pipe)
-			if (! fullMap[row][col].equals("."))
-			{
-				return 0;
-			}
-			//place fill, unless pipe location in which case place capital Fill
-			if ((row % 2 == 0) && (col % 2 == 0))
-			{
-				fullMap[row][col] = Character.toString((char)((int)fill.charAt(0) - 32));
-			}
-			else
-			{
-				fullMap[row][col] = fill;
-			}
-			//Return -1 if child returns -1
-			long up = fillWithPaint(fill, row-1, col);
-			long down = fillWithPaint(fill, row+1, col);
-			long left = fillWithPaint(fill, row, col-1);
-			long right = fillWithPaint(fill, row, col+1);
-			if ((up < 0) || (down < 0) || (left < 0) || (right < 0))
-			{
-				return -1;
-			}
-			//Count up if evenxeven
-			if ((row % 2 == 0) && (col % 2 == 0))
-			{
-				System.out.println("Filling at (" + row + ", " + col + ")");
-				painted ++;
-			}
-			//return
-			return painted + up + down + left + right;
+			return painted;
 		}
 		
 		public Maze(List<String> pstring)
@@ -314,7 +346,7 @@ public class PipesPart2 {
 	
 	public static void main(String[] args) throws IOException {
 		//Reads line from input file
-		File input = new File("day10\\testFileA.txt");
+		File input = new File("day10\\input.txt");
 		BufferedReader br = new BufferedReader(new FileReader(input));
 		String line;
 		List<String> pstring = new ArrayList<String>();
