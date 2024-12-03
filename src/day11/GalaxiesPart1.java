@@ -65,7 +65,7 @@ public class GalaxiesPart1 {
 				System.out.print(er + "; ");
 				if (r > er)
 				{
-					galaxies.get(i)[0] += 1;
+					galaxies.get(i)[0] += 999999;
 				}
 			}
 			System.out.println();
@@ -75,14 +75,14 @@ public class GalaxiesPart1 {
 				System.out.print(ec + "; ");
 				if (c > ec)
 				{
-					galaxies.get(i)[1] += 1;
+					galaxies.get(i)[1] += 999999;
 				}
 			}
 			System.out.println();
 			//System.out.println(galaxies.get(i)[0] + ", " + galaxies.get(i)[1]);
 			i++;
 		}
-		int totalDistance = 0;
+		long totalDistance = 0;
 		int numAdds = 0;
 		for (int g1 = 0; g1 < galaxies.size(); g1++)
 		{
